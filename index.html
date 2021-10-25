@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { margin: 0; padding: 0;}
+        .section {width: 100%; height: 100vh; display: flex;justify-content: center; align-items: center;}
+        .content {position: absolute; padding: 10rem;}
+        .title {font-size: 3rem; font-weight: bold; margin-bottom: 2rem; white-space: nowrap; opacity: 0;  transform: translateY(50px);transition: 0.1s 0.1s;}
+        .desc {font-size: 1.5rem; line-height: 1.3;  opacity: 0;  transform: translateY(50px);transition: 0.1s 0.1s;}
+        .content.active .title {opacity: 1; transform: translateY(0); transition:all 0.5s 0.5s;}
+        .content.active .desc {opacity: 1; transform: translateY(0); transition:all 0.5s 0.8s;}
+    </style>
+    <title>Intersection Observer</title>
+</head>
+<body>
+    <section class="section">
+        <div class="content">
+            <div class="title">Lorem Ipsum is simply dummy text</div>
+            <div class="desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="content">
+            <div class="title">Lorem Ipsum is simply dummy text</div>
+            <div class="desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="content">
+            <div class="title">Lorem Ipsum is simply dummy text</div>
+            <div class="desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</div>
+        </div>
+    </section>
+    <script>
+        const bgColors = ['#FFAEBC', '#A0E7E5', '#B4F8C8']
+        const sectionElems = document.querySelectorAll('section')
+        const contentElems = document.querySelectorAll('.content');
+
+        const setColorOfSection = () => {
+            sectionElems.forEach((sectionElem, idx) => {
+                sectionElem.style.backgroundColor = bgColors[idx]
+            })
+        }
+
+        // IntersectionObserver 등록
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                console.log(entry)
+
+                if(entry.isIntersecting){
+                    entry.target.classList.add('active')
+                }else{
+                    entry.target.classList.remove('active')
+                }
+            })
+        })
+
+        // 관찰할 대상을 선언하고, 해당 속성을 관찰시킴
+        contentElems.forEach((el) => {
+            io.observe(el);
+        })
+
+        setColorOfSection()
+    </script>
+</body>
+</html>
